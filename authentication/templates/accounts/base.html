@@ -19,7 +19,7 @@
     <style >
       html, body{
         height: 100%;
-        /* font-family: "Playfair Display", serif; */
+        font-family: "Playfair Display", serif;
       }
       .auth-box{
         border: 3px solid lightgray;
@@ -81,13 +81,15 @@
     </div>
 </nav>
 
-
+<div class="outer-area ">
+  <div class="auth-box mb-4">
     <div class="container">
     {% block content %}
 
     {% endblock %}
     </div>
-
+  </div>
+</div>
 
 <!-- Footer -->
 <footer class="py-5 bg-dark">
