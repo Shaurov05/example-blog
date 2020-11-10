@@ -8,6 +8,7 @@ from django.urls import reverse
 
 class CustomUser(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
+    confirm_password = models.CharField(max_length=100)
     REQUIRED_FIELDS = []
     email_confirmed = models.BooleanField(default=False)
 

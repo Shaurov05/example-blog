@@ -43,6 +43,14 @@ INSTALLED_APPS = [
     'authentication',
     'posts',
 
+    # rest framework
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_auth',
+    # 'rest_auth.registration',
+    # 'allauth',
+    # 'allauth.account',
+
     # forms
     'crispy_forms',
 ]
@@ -96,6 +104,7 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
+MIN_PASSWORD_LENGTH = 6
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -103,6 +112,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 6,
+        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -156,4 +168,23 @@ LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'login'
 
 AUTH_USER_MODEL = 'authentication.CustomUser'
-AUTHENTICATION_BACKENDS = ['authentication.backends.EmailBackend'] # new
+AUTHENTICATION_BACKENDS = ['authentication.backends.EmailBackend']
+
+
+
+# Django-REST-Framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'authentication.api.pagination.StandardResultsSetPagination'
+
+}
+
+
+#

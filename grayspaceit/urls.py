@@ -19,11 +19,24 @@ from django.conf.urls.static import static
 from django.conf import settings
 from authentication.views import HomePage
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('authentication.urls')),
     path('posts/', include('posts.urls')),
 
     path('', HomePage.as_view(), name="index"),
+
+    # api section
+    path('rest/api/', include('authentication.api.urls')),
+
+    # login using browsable api
+    path("api-auth/",
+                include("rest_framework.urls")),
+    # login using rest api
+    path("api/rest-auth/",
+                include("rest_auth.urls")),
+
+
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
