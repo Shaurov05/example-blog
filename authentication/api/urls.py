@@ -15,11 +15,10 @@ urlpatterns = [
     path('hello/', HelloView.as_view(), name='hello'),
 
     # APIView
-    # path('users/', UserRegistrationView.as_view(), name='article-list'),
     path('users/<pk>/', UserUDRView.as_view(), name='article-detail'),
-
-
-    # path('register/', UserRegistrationView.as_view(), name='api_register'),
     path('', include(router.urls)),
+
+    # login and logout url
+    path('login/', UserLoginView.as_view(), name='login_api'),
 
 ]
