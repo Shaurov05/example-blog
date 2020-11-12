@@ -30,3 +30,4 @@ gunicorn
 Unipath
 python-decouple
 bleach
+django-heroku
