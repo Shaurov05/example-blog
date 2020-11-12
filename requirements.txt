@@ -26,3 +26,7 @@ djangorestframework-simplejwt
 django-cors-headers
 pyjwt
 djangorestframework-jwt
+gunicorn
+Unipath
+python-decouple
+bleach
