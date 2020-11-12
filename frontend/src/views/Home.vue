@@ -9,9 +9,9 @@
       <hr><br><br><br>
 
       <p style="font-size:20px; font-weight:bold; color:#543a1a"> You can register and login via API and also can fetch information i.e. list of users. </p>
-      <h3 v-if="username"> You are authorized as <span style="font-size:30px;" class='router_link'> {{ username }} </span> </h3>
+      <h3 v-if="username"> You are authorized as <span style="font-size:30px;" class='link'> {{ username }} </span> </h3>
       <h3 v-else>You are unauthorized </h3>
-      <h3 v-if="expired" class="router_link"> {{ expired }} Please login again to continue </h3>
+      <h3 v-if="expired" class="link"> {{ expired }} Please login again to continue </h3>
       <br><ul>
         <!-- <li> Username :  </li> -->
         <li>
@@ -109,6 +109,11 @@ export default {
 
 <style scoped>
     .router_link{
+      text-decoration: underline;
+      color:#7a000e; font-size:20px; font-weight:bold;
+    }
+
+    .link{
       color:#7a000e; font-size:20px; font-weight:bold;
     }
 

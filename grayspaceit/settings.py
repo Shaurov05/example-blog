@@ -27,7 +27,7 @@ SECRET_KEY = 'q6gt_q-os$#+1^(%kl0a!y)gg9#nbj3c56)3i8e)p=tr9=*@q)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["https://blog-example-project.herokuapp.com"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
 
 # Application definition
@@ -58,7 +58,7 @@ INSTALLED_APPS = [
 ]
 
 
-SITE_ID=1
+# SITE_ID=1
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -97,19 +97,6 @@ WSGI_APPLICATION = 'grayspaceit.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-import django_heroku
-django_heroku.settings(locals())
-import dj_database_url
-# prod_db  =  dj_database_url.config(conn_max_age=500)
-# DATABASES['default'].update(prod_db)
-# from django.apps.config import config
-# SECRET_KEY = config('thisismydatabase05')
-# DEBUG = config('DEBUG', default=False, cast=bool)
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default=config('DATABASE_URL')
-#     )
-# }
 
 DATABASES = {
     'default': {
@@ -175,23 +162,13 @@ LOGOUT_REDIRECT_URL = '/auth/login/'
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(MAIN_DIR, 'static')
 
-# STATIC_DIR = os.path.join(MAIN_DIR, 'staticfiles')
+STATIC_DIR = os.path.join(MAIN_DIR, 'staticfiles')
 # # STATIC_DIR2 = os.path.join(MAIN_DIR, 'frontend/dist')
-# #
-# STATICFILES_DIRS = [
-#     STATIC_DIR,
-# ]
-
-# from django.core.wsgi import get_wsgi_application
-# from whitenoise import WhiteNoise
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "grayspaceit.settings")
-
-# application = get_wsgi_application()
-# application = WhiteNoise(application, "/static/")
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
+#
+STATICFILES_DIRS = [
+    STATIC_DIR,
+]
+# STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 
 AUTH_USER_MODEL = 'authentication.CustomUser'
@@ -253,8 +230,6 @@ JWT_AUTH = {
 #         'STATS_FILE': os.path.join(BASE_DIR, 'frontend', 'webpack-stats.json'),
 #     }
 # }
-
-
 
 
 #

@@ -26,7 +26,7 @@ djangorestframework-simplejwt
 django-cors-headers
 pyjwt
 djangorestframework-jwt
-gunicorn
+gunicorn==20.0.4
 Unipath
 python-decouple
 bleach
