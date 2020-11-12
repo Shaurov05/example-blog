@@ -162,12 +162,12 @@ LOGOUT_REDIRECT_URL = '/auth/login/'
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(MAIN_DIR, 'static')
 
-STATIC_DIR = os.path.join(MAIN_DIR, 'staticfiles')
+# STATIC_DIR = os.path.join(MAIN_DIR, 'staticfiles')
 # # STATIC_DIR2 = os.path.join(MAIN_DIR, 'frontend/dist')
-#
-STATICFILES_DIRS = [
-    STATIC_DIR,
-]
+# #
+# STATICFILES_DIRS = [
+#     STATIC_DIR,
+# ]
 
 # from django.core.wsgi import get_wsgi_application
 # from whitenoise import WhiteNoise
