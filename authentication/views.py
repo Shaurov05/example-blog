@@ -102,7 +102,7 @@ class UserProfile(LoginRequiredMixin, DetailView):
 
 # Edit Profile View
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
-    login_url = 'auth/login/'
+    login_url = '/auth/login/'
     redirect_field_name ="/"
     model = CustomUser
     form_class = ProfileForm

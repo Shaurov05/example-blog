@@ -1,0 +1,23 @@
+{% extends "vue/vue_base.html" %}
+{% load static %}
+
+{% block style %}
+  <link rel="stylesheet" href="{% static 'vue/bundle.css' %}">
+{% endblock %}
+
+{% block vue_content %}
+
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+
+    <div id="app"></div>
+
+{% endblock  %}
+
+
+{% block js %}
+  <script src="{% static 'vue/bundle.js' %}">
+
+  </script>
+{% endblock %}

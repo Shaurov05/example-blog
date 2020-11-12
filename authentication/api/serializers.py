@@ -39,6 +39,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import update_last_login
 from rest_framework_jwt.settings import api_settings
 from django.contrib.auth.hashers import check_password
+from django.http import HttpResponse
 
 JWT_PAYLOAD_HANDLER = api_settings.JWT_PAYLOAD_HANDLER
 JWT_ENCODE_HANDLER = api_settings.JWT_ENCODE_HANDLER
@@ -52,11 +53,19 @@ class UserLoginSerializer(serializers.Serializer):
     def validate(self, data):
         email = data.get("email", None)
         password = data.get("password", None)
+        user = None
+        authenticated = False
 
         try:
             user = CustomUser.objects.get(email=email)
         except :
-            user = CustomUser.objects.get(username=email)
+            try:
+                user = CustomUser.objects.get(username=email)
+            except :
+                raise serializers.ValidationError(
+                    'A user with this email/Username does not exist!'
+                )
+
         if user is not None:
             authenticated = check_password(password, user.password)
 
@@ -67,6 +76,7 @@ class UserLoginSerializer(serializers.Serializer):
         try:
             payload = JWT_PAYLOAD_HANDLER(user)
             jwt_token = JWT_ENCODE_HANDLER(payload)
+
             update_last_login(None, user)
         except CustomUser.DoesNotExist:
             raise serializers.ValidationError(
@@ -76,3 +86,10 @@ class UserLoginSerializer(serializers.Serializer):
             'email':user.email,
             'token': jwt_token
         }
+
+
+class UserDisplaySerialzer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CustomUser
+        fields = ["username"]

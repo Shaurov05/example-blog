@@ -14,6 +14,8 @@ from pathlib import Path
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+MAIN_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TEMPLATE_DIR = os.path.join(MAIN_DIR,"templates")
 
 
 # Quick-start development settings - unsuitable for production
@@ -23,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'q6gt_q-os$#+1^(%kl0a!y)gg9#nbj3c56)3i8e)p=tr9=*@q)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 
 # Application definition
@@ -47,12 +49,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
-    # 'rest_auth.registration',
-    # 'allauth',
-    # 'allauth.account',
 
     # forms
     'crispy_forms',
+
+    # vue js
+    'webpack_loader',
 ]
 
 
@@ -155,17 +157,21 @@ EMAIL_HOST_PASSWORD = 'thisisbusinessemail05'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 # STATIC
-# ------------------------------------------------------------------------------
-# https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-STATIC_ROOT = str(BASE_DIR / "staticfiles")
-# https://docs.djangoproject.com/en/dev/ref/settings/#static-url
-STATIC_URL = "/static/"
-# https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
-STATICFILES_DIRS = [str(BASE_DIR / "static")]
-
+#
 
 LOGIN_REDIRECT_URL = 'index'
-LOGOUT_REDIRECT_URL = 'login'
+LOGOUT_REDIRECT_URL = '/auth/login/'
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(MAIN_DIR, 'static')
+
+# STATIC_DIR = os.path.join(MAIN_DIR, 'static')
+# # STATIC_DIR2 = os.path.join(MAIN_DIR, 'frontend/dist')
+#
+# STATICFILES_DIRS = [
+#     STATIC_DIR,
+#     STATIC_DIR2,
+# ]
 
 AUTH_USER_MODEL = 'authentication.CustomUser'
 AUTHENTICATION_BACKENDS = ['authentication.backends.EmailBackend']
@@ -209,7 +215,7 @@ JWT_AUTH = {
   'JWT_VERIFY_EXPIRATION': True,
   'JWT_LEEWAY': 0,
   # 'JWT_EXPIRATION_DELTA': timedelta(days=30),
-  'JWT_EXPIRATION_DELTA': timedelta(hours=1),
+  'JWT_EXPIRATION_DELTA': timedelta(hours=2),
   'JWT_AUDIENCE': None,
   'JWT_ISSUER': None,
   'JWT_ALLOW_REFRESH': True,
@@ -220,5 +226,11 @@ JWT_AUTH = {
 }
 
 
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'dist/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'frontend', 'webpack-stats.json'),
+    }
+}
 
 #

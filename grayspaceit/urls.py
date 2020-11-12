@@ -14,29 +14,32 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf.urls.static import static
 from django.conf import settings
 from authentication.views import HomePage
+from . import views
 
+# for debug=False
+from django.views.static import serve
+from django.conf.urls import url
+from django.conf import settings
 
 urlpatterns = [
+    url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
+    url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
+
     path('admin/', admin.site.urls),
     path('auth/', include('authentication.urls')),
     path('posts/', include('posts.urls')),
 
-    path('', HomePage.as_view(), name="index"),
+    path('home/', HomePage.as_view(), name="index"),
 
     # api section
     path('rest/api/', include('authentication.api.urls')),
 
-    # login using browsable api
-    path("api-auth/",
-                include("rest_framework.urls")),
-    # login using rest api
-    path("api/rest-auth/",
-                include("rest_auth.urls")),
 
+    re_path(r"^.*$", views.IndexTemplateView, name='entry-point'),
 
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

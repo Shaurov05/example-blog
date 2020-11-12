@@ -9,12 +9,10 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 
 
-class HelloView(APIView):
-    permission_classes = (IsAuthenticated,)
-
+class CurrentUserAPIView(APIView):
     def get(self, request):
-        content = {'message': 'Hello, World!'}
-        return Response(content)
+        serializer = UserDisplaySerialzer(request.user)
+        return Response(serializer.data)
 
 
 from django.contrib.auth import get_user_model
@@ -23,16 +21,18 @@ from rest_framework.views import APIView
 from django.contrib.auth.hashers import check_password
 from . pagination import StandardResultsSetPagination
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from authentication.api.permissions import IsAuthorOrReadOnly
+from authentication.api.permissions import IsAuthorOrReadOnly, IsSafeOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 class UserRegistrationView(viewsets.ModelViewSet):
     queryset = get_user_model().objects.all()
+    permission_classes = (IsSafeOrReadOnly, )
     serializer_class = UserRegistrationSerializer
     pagination_class = StandardResultsSetPagination
     http_method_names = ['get', 'post']
 
 
-class UserUDRView(RetrieveAPIView):
+class UserUDRView(GenericAPIView):
     permission_classes = (IsAuthorOrReadOnly, )
     authentication_class = JSONWebTokenAuthentication
     serializer_class = UserRegistrationSerializer
@@ -80,6 +80,7 @@ class UserLoginView(APIView):
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
+
         response = {
             'success' : 'True',
             'status code' : status.HTTP_200_OK,
